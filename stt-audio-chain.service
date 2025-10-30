@@ -1,0 +1,21 @@
+[Unit]
+Description=STT Microphone Audio Processing Chain
+Documentation=https://github.com/danielrosehill/Speech-Recognition-Audio-Chain
+After=pipewire.service
+Requires=pipewire.service
+PartOf=pipewire.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+# The configuration file is loaded automatically by PipeWire
+# This service just ensures it stays enabled
+ExecStart=/bin/true
+ExecStop=/bin/true
+
+# Restart PipeWire when this service starts to ensure filter chain is loaded
+ExecStartPost=/usr/bin/systemctl --user restart pipewire.service
+
+[Install]
+WantedBy=default.target
